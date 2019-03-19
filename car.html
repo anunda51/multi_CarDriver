@@ -8,10 +8,13 @@
     <script type="text/javascript">
         var scene;
         var car;
+        //หันซ้าย ขวา หน้า หลัง
         var turnUp = 0;
         var turnRight = 90;
         var turnDown = 180;
         var turnLeft = 270;
+
+        //ความเร็วสูงสุด
         var topSpeed = 0;
 
         function init(){
@@ -27,36 +30,62 @@
             scene.clear();
 
             //handle events here
+
+            //หันซ้าย
             if(keysDown[K_LEFT]){
                 car.changeAngleBy(-5);
             }
+            //หันขวา
             if(keysDown[K_RIGHT]){
                 car.changeAngleBy(5);
             }
+
+            //เดินหน้า
             if(keysDown[K_UP]){
                 topSpeed++;
                 console.log(topSpeed);
-                if(topSpeed>10){
+                //กำหนดความเร็วสูงสุด
+                if(topSpeed>30){
                     car.changeSpeedBy(0);
-                    topSpeed = 10;
+                    topSpeed = 30;
                 }else{
                     car.changeSpeedBy(1);
                 }
             }
+
+            //ถอยหลัง
             if(keysDown[K_DOWN]){
                 topSpeed--;
                 console.log(topSpeed);
-                if(topSpeed<=-10){
+                //กำหนดความเร็วสูงสุด
+                if(topSpeed<=-30){
                     car.changeSpeedBy(0);
-                    topSpeed = -10;
+                    topSpeed = -30;
                 }else{
                     car.changeSpeedBy(-1);
                 }
             }
+
+            //เบรค โดยการชะลอ
             if(keysDown[K_SPACE]){
-                car.setSpeed(0);
-                topSpeed = 0;
-                console.log(topSpeed);
+                if(topSpeed>0){
+                    topSpeed--;
+                    console.log(topSpeed);
+                    car.changeSpeedBy(-1);
+                    if(topSpeed==0){
+                        car.setSpeed(0);
+                        topSpeed = 0;
+                    }
+                }
+                if(topSpeed<0){
+                    topSpeed++;
+                    console.log(topSpeed);
+                    car.changeSpeedBy(1);
+                    if(topSpeed==0){
+                        car.setSpeed(0);
+                        topSpeed = 0;
+                    }
+                }
             }
             //update all the sprites
             car.update();
