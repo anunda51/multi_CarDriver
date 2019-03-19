@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>template for simple games</title>
+    <script type="text/javascript"
+            src = "simpleGame.js"></script>
+    <script type="text/javascript">
+        var scene;
+        var car;
+        var turnUp = 0;
+        var turnRight = 90;
+        var turnDown = 180;
+        var turnLeft = 270;
+        var topSpeed = 0;
+
+        function init(){
+            scene = new Scene();
+            car = new Sprite(scene, "car.png", 80, 50);
+            car.setSpeed(0);
+            car.setAngle(turnRight);
+            
+            scene.start();
+        } // end init
+        
+        function update(){
+            scene.clear();
+
+            //handle events here
+            if(keysDown[K_LEFT]){
+                car.changeAngleBy(-5);
+            }
+            if(keysDown[K_RIGHT]){
+                car.changeAngleBy(5);
+            }
+            if(keysDown[K_UP]){
+                topSpeed++;
+                console.log(topSpeed);
+                if(topSpeed>10){
+                    car.changeSpeedBy(0);
+                    topSpeed = 10;
+                }else{
+                    car.changeSpeedBy(1);
+                }
+            }
+            if(keysDown[K_DOWN]){
+                topSpeed--;
+                console.log(topSpeed);
+                if(topSpeed<=-10){
+                    car.changeSpeedBy(0);
+                    topSpeed = -10;
+                }else{
+                    car.changeSpeedBy(-1);
+                }
+            }
+            if(keysDown[K_SPACE]){
+                car.setSpeed(0);
+                topSpeed = 0;
+                console.log(topSpeed);
+            }
+            //update all the sprites
+            car.update();
+        }
+    </script>
+</head>
+<body onload = "init()">
+    <h1>Drive the car!!</h1>
+</body>
+</html>
